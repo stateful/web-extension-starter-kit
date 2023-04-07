@@ -15,15 +15,16 @@ Install dependencies via:
 npm i
 ```
 
-then build files via:
+then start a browser with the web extension installed:
 
 ```sh
-npm run bundle
-# building for Chrome
-npm run bundle:chrome
-# building for Firefox
-npm run bundle:firefox
+# run Chrome
+npm run start:chrome
+# run Firefox
+npm run start:firefox
 ```
+
+This script will bundle the extension as `web-extension-chrome-vX.X.X.crx` and `web-extension-firefox-vX.X.X.zip`.
 
 ### Test
 
