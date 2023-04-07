@@ -7,7 +7,6 @@ import type { Options } from '@wdio/types'
 import pkg from './package.json' assert { type: 'json' }
 import { config as baseConfig } from './wdio.conf.js'
 
-
 const __dirname = url.fileURLToPath(new URL('.', import.meta.url))
 const chromeExtension = (await fs.readFile(path.join(__dirname, `web-extension-chrome-v${pkg.version}.crx`))).toString('base64')
 
