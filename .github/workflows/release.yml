@@ -45,6 +45,7 @@ jobs:
       - name: Test
         run: npm test
         env:
+          DETECT_CHROMEDRIVER_VERSION: true
           NODE_ENV: production
       - name: Prepare Release
         run: |
