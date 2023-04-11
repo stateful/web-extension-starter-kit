@@ -40,12 +40,13 @@ jobs:
           git config --global user.email "christian+github-bot@stateful.com"
       - name: Install
         run: npm ci
+        env:
+          DETECT_CHROMEDRIVER_VERSION: true
       - name: Bundle
         run: npm run bundle
       - name: Test
         run: npm test
         env:
-          DETECT_CHROMEDRIVER_VERSION: true
           NODE_ENV: production
       - name: Prepare Release
         run: |
