@@ -18,37 +18,32 @@ async function startDriver (browserName) {
     ? 'chromedriver'
     : 'geckodriver'
   const driver = await import(driverName)
-  driver.start(['--port=4444'])
-  return new Promise((resolve) => setTimeout(resolve, 1000))
+  const cp = driver.start(['--port=4444'])
+  cp.stdout.pipe(process.stdout)
+  cp.stderr.pipe(process.stderr)
+  return new Promise((resolve) => setTimeout(resolve, 2000))
 }
 
 /**
  * start WebDriver session with extension installed
  */
 async function startBrowser (browserName) {
-  const extFileName = browserName === 'chrome'
-    ? `web-extension-chrome-v${pkg.version}.crx`
-    : `web-extension-firefox-v${pkg.version}.xpi`
-  const extPath = path.join(__dirname, '..', '..', extFileName)
-
-  await fs.access(extPath)
-    .catch(() => console.log(`Can't access bundled extension at ${extPath}, did you run "npm run bundle" before?`))
-
   const capabilities = browserName === 'chrome'
     ? {
       browserName,
       'goog:chromeOptions': {
-        extensions: [(await fs.readFile(extPath)).toString('base64')]
+        args: [`--load-extension=${path.join(__dirname, '..', '..', 'dist')}`]
       }
     }
     : { browserName }
   const browser = await remote({
     logLevel: 'error',
+    automationProtocol: 'webdriver',
     capabilities
   })
 
   if (browserName === 'firefox') {
-    const extension = await fs.readFile(extFileName)
+    const extension = await fs.readFile(path.join(__dirname, '..', '..', `web-extension-firefox-v${pkg.version}.xpi`))
     await browser.installAddOn(extension.toString('base64'), true)
   }
 
@@ -57,5 +52,5 @@ async function startBrowser (browserName) {
 
 const browserName = process.argv.slice(2).pop() || 'chrome'
 console.log(`Run web extension in ${browserName}...`);
-await startDriver(browserName)
+// await startDriver(browserName)
 await startBrowser(browserName)

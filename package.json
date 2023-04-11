@@ -30,8 +30,12 @@
     "compile:vite:js": "vite build --config vite.content.config.ts",
     "preview": "vite preview",
     "start": "run-s start:chrome",
-    "start:chrome": "run-s bundle:chrome && ./.github/scripts/start.js chrome",
-    "start:firefox": "run-s bundle:firefox && ./.github/scripts/start.js firefox",
+    "start:chrome": "npm-run-all bundle:chrome --parallel start:chrome:*",
+    "start:chrome:watcher": "npm run watch:chrome",
+    "start:chrome:startBrowser": "./.github/scripts/start.js chrome",
+    "start:firefox": "npm-run-all bundle:firefox --parallel start:firefox:*",
+    "start:firefox:watcher": "npm run watch:firefox",
+    "start:firefox:startBrowser": "./.github/scripts/start.js firefox",
     "test": "run-s test:*",
     "test:lint": "web-ext lint -s ./dist",
     "test:component": "wdio run ./wdio.ui.conf.ts --autoCompileOpts.tsNodeOpts.project ./tsconfig.node.json",
@@ -39,7 +43,12 @@
     "version": "run-s version:*",
     "version:update": "npx replace ' \"version\": \"(\\d+).(\\d+).(\\d+)\"' \" \\\"version\\\": \\\"$npm_package_version\\\"\" ./public/*.json",
     "version:bundle": "run-s bundle",
-    "version:git": "git add public"
+    "version:git": "git add public",
+    "watch:chrome": "run-p watch:all:* watch:chrome:script",
+    "watch:firefox": "run-p watch:chrome:*",
+    "watch:all:web": "npm run compile:vite:web -- --watch",
+    "watch:all:js": "npm run compile:vite:js -- --watch",
+    "watch:chrome:script": "npm run build:chrome:script -- --watch"
   },
   "devDependencies": {
     "@testing-library/react": "^14.0.0",
