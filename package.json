@@ -37,7 +37,6 @@
     "start:firefox:watcher": "npm run watch:firefox",
     "start:firefox:startBrowser": "./.github/scripts/start.js firefox",
     "test": "run-s test:*",
-    "test:lint": "web-ext lint -s ./dist",
     "test:component": "wdio run ./wdio.ui.conf.ts --autoCompileOpts.tsNodeOpts.project ./tsconfig.node.json",
     "test:e2e": "wdio run ./wdio.e2e.conf.ts --autoCompileOpts.tsNodeOpts.project ./tsconfig.node.json",
     "version": "run-s version:*",

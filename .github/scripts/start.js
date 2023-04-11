@@ -18,9 +18,7 @@ async function startDriver (browserName) {
     ? 'chromedriver'
     : 'geckodriver'
   const driver = await import(driverName)
-  const cp = driver.start(['--port=4444'])
-  cp.stdout.pipe(process.stdout)
-  cp.stderr.pipe(process.stderr)
+  driver.start(['--port=4444'])
   return new Promise((resolve) => setTimeout(resolve, 2000))
 }
 
@@ -52,5 +50,5 @@ async function startBrowser (browserName) {
 
 const browserName = process.argv.slice(2).pop() || 'chrome'
 console.log(`Run web extension in ${browserName}...`);
-// await startDriver(browserName)
+await startDriver(browserName)
 await startBrowser(browserName)
