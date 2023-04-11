@@ -30,7 +30,7 @@
     "compile:vite:js": "vite build --config vite.content.config.ts",
     "preview": "vite preview",
     "start": "run-s start:chrome",
-    "start:chrome": "npm-run-all bundle:chrome --parallel start:chrome:*",
+    "start:chrome": "run-p start:chrome:*",
     "start:chrome:watcher": "npm run watch:chrome",
     "start:chrome:startBrowser": "./.github/scripts/start.js chrome",
     "start:firefox": "npm-run-all bundle:firefox --parallel start:firefox:*",
@@ -47,7 +47,7 @@
     "watch:firefox": "run-p watch:chrome:*",
     "watch:all:web": "npm run compile:vite:web -- --watch",
     "watch:all:js": "npm run compile:vite:js -- --watch",
-    "watch:chrome:script": "npm run build:chrome:script -- --watch"
+    "watch:chrome:script": "sleep 1 && npm run build:chrome:script -- --watch"
   },
   "devDependencies": {
     "@testing-library/react": "^14.0.0",
