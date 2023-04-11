@@ -3,11 +3,12 @@ import url from 'node:url'
 import fs from 'node:fs/promises'
 
 import { browser, $$, expect } from '@wdio/globals'
+import type { Capabilities } from '@wdio/types'
 
 import pkg from '../package.json' assert { type: 'json' }
 
 const __dirname = url.fileURLToPath(new URL('.', import.meta.url))
-const isFirefox = browser.capabilities.browserName === 'firefox'
+const isFirefox = (browser.capabilities as Capabilities.Capabilities).browserName === 'firefox'
 
 describe('Web Extension e2e test', () => {
   before(async () => {
@@ -16,14 +17,12 @@ describe('Web Extension e2e test', () => {
     }
 
     const extension = await fs.readFile(path.resolve(__dirname, '..', `web-extension-firefox-v${pkg.version}.xpi`))
+    // @ts-expect-error
     await browser.installAddOn(extension.toString('base64'), true)
   })
 
-  it('should load with working extension', async () => {
+  it('should have injected the component from the content script', async () => {
     await browser.url('https://google.com')
-    const selector = isFirefox
-      ? '.web-component-button'
-      : 'web-component-button'
-    await expect($$(selector)).toBeElementsArrayOfSize(4)
+    await expect($$('#extension-root')).toBeElementsArrayOfSize(1)
   })
 })
