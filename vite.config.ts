@@ -19,8 +19,11 @@ export default defineConfig({
     emptyOutDir: false,
     rollupOptions: {
       input: {
-        index: new URL('./index.html', import.meta.url).pathname,
-        background: new URL('./background.html', import.meta.url).pathname,
+        popup: new URL('./popup/index.html', import.meta.url).pathname,
+        background: new URL('./background/index.html', import.meta.url).pathname
+      },
+      output: {
+        entryFileNames: "[name]/[name].js"
       }
     }
   }

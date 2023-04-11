@@ -8,16 +8,16 @@ export default defineConfig({
     'process.env': {}
   },
   build: {
-    emptyOutDir: true,
+    emptyOutDir: false,
     outDir: path.resolve(__dirname, 'dist'),
     lib: {
       formats: ['iife'],
-      entry: path.resolve(__dirname, './content-script/index.ts'),
+      entry: path.resolve(__dirname, 'content-script', 'index.tsx'),
       name: 'Cat Facts'
     },
     rollupOptions: {
       output: {
-        entryFileNames: 'index.global.js',
+        entryFileNames: 'contentScript/index.js',
         extend: true,
       }
     }

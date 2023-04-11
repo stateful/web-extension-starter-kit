@@ -22,12 +22,12 @@ export default defineConfig({
     outDir: path.resolve(__dirname, 'dist'),
     lib: {
       formats: ['iife'],
-      entry: path.resolve(__dirname, './background.ts'),
+      entry: path.resolve(__dirname, 'background', 'index.ts'),
       name: 'Cat Facts'
     },
     rollupOptions: {
       output: {
-        entryFileNames: 'background.global.js',
+        entryFileNames: 'background/background.js',
         extend: true,
       }
     }

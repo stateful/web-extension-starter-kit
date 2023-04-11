@@ -4,19 +4,16 @@
   "description": "A web extension that works in all browser.",
   "author": "Christian Bromann <christian@stateful.com>",
   "license": "MIT",
-  "export": "/dist/index.global.js",
   "type": "module",
   "private": true,
   "scripts": {
     "clean": "rimraf dist ./*.zip ./*.crx ./*.pem",
     "dev": "vite",
-    "build:firefox": "NODE_ENV=production run-s clean build:js build:web build:firefox:*",
+    "build:firefox": "NODE_ENV=production run-s clean compile build:firefox:*",
     "build:firefox:manifest": "mv dist/manifestv2.json dist/manifest.json",
-    "build:chrome": "NODE_ENV=production run-s clean build:js build:web build:chrome:*",
-    "build:chrome:background": "vite build --config vite.chrome.config.ts",
+    "build:chrome": "NODE_ENV=production run-s clean compile build:chrome:*",
+    "build:chrome:script": "vite build --config vite.chrome.config.ts",
     "build:chrome:manifest": "rm dist/manifestv2.json",
-    "build:js": "vite build --config vite.content.config.ts",
-    "build:web": "tsc && vite build",
     "bundle": "run-s bundle:*",
     "bundle:clean": "run-s clean",
     "bundle:firefox": "run-s bundle:firefox:*",
@@ -24,8 +21,13 @@
     "bundle:firefox:zip": "web-ext build -s dist/ -a . && mv ./my_web_extension-$npm_package_version.zip ./web-extension-firefox-v$npm_package_version.xpi",
     "bundle:chrome": "run-s bundle:chrome:*",
     "bundle:chrome:build": "run-s build:chrome",
-    "bundle:chrome:zip": "run-s build:chrome && zip -r ./web-extension-chrome-v$npm_package_version.zip ./dist",
+    "bundle:chrome:zip": "zip -r ./web-extension-chrome-v$npm_package_version.zip ./dist",
     "bundle:chrome:crx": "crx pack ./dist -o ./web-extension-chrome-v$npm_package_version.crx",
+    "compile": "run-s compile:*",
+    "compile:tsc": "tsc",
+    "compile:vite": "run-p compile:vite:*",
+    "compile:vite:web": "vite build",
+    "compile:vite:js": "vite build --config vite.content.config.ts",
     "preview": "vite preview",
     "start": "run-s start:chrome",
     "start:chrome": "run-s bundle:chrome && ./.github/scripts/start.js chrome",
@@ -40,8 +42,11 @@
     "version:git": "git add public"
   },
   "devDependencies": {
+    "@testing-library/react": "^14.0.0",
     "@types/node": "^18.15.11",
+    "@types/react": "^18.0.34",
     "@types/webextension-polyfill": "^0.10.0",
+    "@vitejs/plugin-react": "^3.1.0",
     "@wdio/browser-runner": "^8.8.0",
     "@wdio/cli": "^8.8.0",
     "@wdio/firefox-profile-service": "^8.8.0",
@@ -66,7 +71,7 @@
     "webextension-polyfill": "^0.10.0"
   },
   "dependencies": {
-    "@webcomponents/custom-elements": "^1.6.0",
-    "lit": "^2.7.2"
+    "react": "^18.2.0",
+    "react-dom": "^18.2.0"
   }
 }

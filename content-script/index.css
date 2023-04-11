@@ -1,4 +1,4 @@
-/* @tailwind base;
+@tailwind base;
 @tailwind components;
 @tailwind utilities;
 
@@ -6,7 +6,7 @@
     h1 {
         @apply text-slate-700 text-xl
     }
-} */
+}
 
 /* global CSS here */
 a {

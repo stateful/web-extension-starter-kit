@@ -5,11 +5,11 @@ import { config as baseConfig } from './wdio.conf.js'
 export const config: Options.Testrunner = {
   ...baseConfig,
   specs: [
-    './src/**/*.test.ts',
-    './content-script/**/*.test.ts',
+    './content-script/*.test.tsx',
+    './popup/*.test.ts'
   ],
   runner: ['browser', {
-    preset: 'lit',
+    preset: 'react',
     headless: !process.env.DEBUG
   }],
   capabilities: [{
