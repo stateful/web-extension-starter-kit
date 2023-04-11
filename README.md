@@ -1,10 +1,12 @@
 # My Web Extension
 
+> This is a starter kit for building cross platform browser extensions. You can use it as a template for your project. It comes with a [Vite](https://vitejs.dev/) + [TailwindCSS](https://tailwindcss.com/) + [WebdriverIO](https://webdriver.io) setup for building and testing extension popup modals, content and background scripts. Read more about building cross platform browser extensions in our [corresponding blog post](https://stateful.com/blog/building-cross-browser-web-extensions).
+
 A browser web extension that works on Chrome, Firefox and Safari. Download the extension on the marketplaces:
 
 - Chrome:: https://chrome.google.com/webstore/detail/my-web-extension/lnihnbkolojkaehnkdmpliededkfebkk
 - Firefox: https://addons.mozilla.org/en-GB/firefox/addon/my-web-extension/
-- Safari: _(see [`stateful/web-extension-starter-kit#1`](https://github.com/stateful/web-extension-starter-kit/issues/1))_
+- Safari: _(not yet supported, see [`stateful/web-extension-starter-kit#1`](https://github.com/stateful/web-extension-starter-kit/issues/1))_
 
 ## Development
 ### Setup
@@ -12,7 +14,7 @@ A browser web extension that works on Chrome, Firefox and Safari. Download the e
 Install dependencies via:
 
 ```sh
-npm i
+npm install
 ```
 
 then start a browser with the web extension installed:
