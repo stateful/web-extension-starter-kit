@@ -2,13 +2,40 @@ import path from 'node:path'
 import url from 'node:url'
 import fs from 'node:fs/promises'
 
-import type { Options } from '@wdio/types'
+import { browser } from '@wdio/globals'
+import type { Options, Capabilities } from '@wdio/types'
 
 import pkg from './package.json' assert { type: 'json' }
 import { config as baseConfig } from './wdio.conf.js'
 
 const __dirname = url.fileURLToPath(new URL('.', import.meta.url))
 const chromeExtension = (await fs.readFile(path.join(__dirname, `web-extension-chrome-v${pkg.version}.crx`))).toString('base64')
+
+async function openExtensionPopup (this: WebdriverIO.Browser, extensionName: string, popupUrl = 'index.html') {
+  if ((this.capabilities as Capabilities.Capabilities).browserName !== 'chrome') {
+    throw new Error('This command only works with Chrome')
+  }
+  await this.url('chrome://extensions/')
+
+  const extensions = await this.$$('>>> extensions-item')
+  const extension = await extensions.find(async (ext) => (await ext.$('#name').getText()) === extensionName)
+
+  if (!extension) {
+    const installedExtensions = await extensions.map((ext) => ext.$('#name').getText())
+    throw new Error(`Couldn't find extension "${extensionName}", available installed extensions are "${installedExtensions.join('", "')}"`)
+  }
+
+  const extId = await extension.getAttribute('id')
+  await this.url(`chrome-extension://${extId}/popup/${popupUrl}`)
+}
+
+declare global {
+  namespace WebdriverIO {
+      interface Browser {
+        openExtensionPopup: typeof openExtensionPopup
+      }
+  }
+}
 
 export const config: Options.Testrunner = {
   ...baseConfig,
@@ -24,5 +51,8 @@ export const config: Options.Testrunner = {
     'moz:firefoxOptions': {
       args: ['-headless']
     }
-  }]
+  }],
+  before: () => {
+    browser.addCommand('openExtensionPopup', openExtensionPopup)
+  }
 }
