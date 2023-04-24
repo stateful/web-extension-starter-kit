@@ -54,7 +54,7 @@
     "@types/node": "^18.15.11",
     "@types/react": "^18.0.34",
     "@types/webextension-polyfill": "^0.10.0",
-    "@vitejs/plugin-react": "^3.1.0",
+    "@vitejs/plugin-react": "^4.0.0",
     "@wdio/browser-runner": "^8.8.0",
     "@wdio/cli": "^8.8.0",
     "@wdio/firefox-profile-service": "^8.8.0",
