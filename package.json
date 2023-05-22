@@ -76,7 +76,7 @@
     "vite": "^4.2.1",
     "wait-on": "^7.0.1",
     "wdio-chromedriver-service": "^8.1.1",
-    "wdio-geckodriver-service": "^4.1.1",
+    "wdio-geckodriver-service": "^5.0.1",
     "web-ext": "^7.6.0",
     "webextension-polyfill": "^0.10.0"
   },
