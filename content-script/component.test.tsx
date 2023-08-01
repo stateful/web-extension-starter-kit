@@ -1,18 +1,11 @@
 import React from 'react'
 import { $, expect } from '@wdio/globals'
-import { mock, fn } from '@wdio/browser-runner'
 import { render } from '@testing-library/react'
 import browser from 'webextension-polyfill'
 
 import Component from './component.js'
 
-mock('webextension-polyfill', () => ({
-  runtime: {
-    sendMessage: fn().mockResolvedValue({ data: 'Some funny cat fact!' })
-  }
-}))
-
-describe('Web Extension Component', () => {
+describe('Content Script Component Tests', () => {
   it('should be able to fetch cat facts', async () => {
     render(<Component />)
     await expect($('h1')).toHaveText('Cat Facts!')

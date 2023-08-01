@@ -59,7 +59,6 @@ export const config: Options.Testrunner = {
 
     if (browserName === 'firefox') {
       const extension = await fs.readFile(firefoxExtensionPath)
-      // @ts-expect-error
       await browser.installAddOn(extension.toString('base64'), true)
     }
   }
